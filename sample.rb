@@ -4,12 +4,12 @@ class SampleClass
     puts "Hello, #{name}!"
   end
 
-  def calculate(x,y)
+  def calculate(x, y)
     result=x+y
-    return result
+    result
   end
 
-  def check_value( value )
+  def check_value(value)
     if value > 0
       puts 'positive'
     else
