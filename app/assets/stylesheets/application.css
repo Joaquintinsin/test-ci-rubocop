@@ -8,3 +8,13 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.welcome-container {
+  text-align: center;
+  padding: 50px;
+}
+
+.welcome-container ul {
+  list-style: none;
+  padding: 0;
+}
