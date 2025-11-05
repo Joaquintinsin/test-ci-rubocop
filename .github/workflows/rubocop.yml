@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,8 +22,8 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
-          bundler-cache: false
+          ruby-version: .ruby-version
+          bundler-cache: true
 
       - name: Install RuboCop
         run: gem install rubocop
@@ -34,7 +34,7 @@ jobs:
           # Get the list of modified Ruby files in this PR
           git fetch origin ${{ github.base_ref }} || echo "Base branch already available"
           MODIFIED_FILES=$(git diff --name-only --diff-filter=ACMRT origin/${{ github.base_ref }}...HEAD | grep '\.rb$' || true)
-          
+
           if [ -z "$MODIFIED_FILES" ]; then
             echo "No Ruby files were modified in this PR"
             echo "files_exist=false" >> $GITHUB_OUTPUT

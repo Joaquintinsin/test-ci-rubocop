@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 # Sample Ruby file with some style issues that RuboCop can detect
 class SampleClass
   def greet(name)
     puts "Hello, #{name}!"
   end
 
-  def calculate(x,y)
-    result=x+y
-    return result
+  def calculate(x, y)
+    x + y
   end
 
-  def check_value( value )
-    if value > 0
+  def check_value(value)
+    if value.positive?
       puts 'positive'
     else
       puts 'negative or zero'
