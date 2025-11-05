@@ -30,7 +30,7 @@ jobs:
         id: changed-files
         run: |
           # Get the list of modified Ruby files in this PR
-          git fetch origin ${{ github.base_ref }}
+          git fetch origin ${{ github.base_ref }} || echo "Base branch already available"
           MODIFIED_FILES=$(git diff --name-only --diff-filter=ACMRT origin/${{ github.base_ref }}...HEAD | grep '\.rb$' || true)
           
           if [ -z "$MODIFIED_FILES" ]; then
@@ -39,7 +39,7 @@ jobs:
           else
             echo "Modified Ruby files:"
             echo "$MODIFIED_FILES"
-            # Save the files to a temporary file
+            # Save the files to a temporary file (one file per line)
             echo "$MODIFIED_FILES" > modified_files.txt
             echo "files_exist=true" >> $GITHUB_OUTPUT
           fi
@@ -48,10 +48,10 @@ jobs:
         if: steps.changed-files.outputs.files_exist == 'true'
         run: |
           # Read the modified files and run RuboCop with --display-only-safe-correctable
-          FILES=$(cat modified_files.txt | tr '\n' ' ')
-          if [ ! -z "$FILES" ]; then
+          # Use xargs to handle filenames with spaces properly
+          if [ -f modified_files.txt ] && [ -s modified_files.txt ]; then
             echo "Running RuboCop with --display-only-safe-correctable on modified files..."
-            rubocop --display-only-safe-correctable $FILES
+            cat modified_files.txt | xargs rubocop --display-only-safe-correctable
           fi
 
       - name: Report status
