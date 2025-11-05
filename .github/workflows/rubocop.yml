@@ -3,8 +3,6 @@ name: RuboCop Safe Corrections Check
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
-      - '**.rb'
 
 jobs:
   rubocop:
@@ -23,10 +21,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: true
+          bundler-cache: false
 
       - name: Install RuboCop
-        run: gem install rubocop
+        run: |
+          gem install rubocop
+          gem install rubocop-capybara
+          gem install rubocop-rails
 
       - name: Get modified Ruby files
         id: changed-files
