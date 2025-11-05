@@ -6,5 +6,4 @@ class ApplicationController < ActionController::Base
   # ADd comment!!
   # ADd comment!!
   # ADd comment!!
-  # A verrrr RB
 end
