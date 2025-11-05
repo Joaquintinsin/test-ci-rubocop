@@ -28,7 +28,6 @@ jobs:
       - name: Install RuboCop
         run: |
           gem install rubocop
-          gem install rubocop-ast
           gem install rubocop-capybara
           gem install rubocop-rails
 
